@@ -1,0 +1,32 @@
+diff --git a/Makefile b/Makefile
+index 05f7a36..6bb4766 100755
+--- a/Makefile
++++ b/Makefile
+@@ -1,9 +1,9 @@
+ CFLAGS    = -Wall -Wextra -std=c99 -pedantic-errors -O2
+ LIBS      = -lm -ldl
+-TARGET    = docs/berry.js
++TARGET    = docs/berry.html
+ CC        = emcc
+ MKDIR     = mkdir
+-LFLAGS    = -s WASM=0 -s ASYNCIFY \
++LFLAGS    = -s WASM=1 -s ASYNCIFY=0 -s ALLOW_MEMORY_GROWTH=1 -s FETCH=1 --proxy-to-worker \
+             -s 'ASYNCIFY_IMPORTS=["_js_readbuffer", "_js_writebuffer"]'
+ 
+ INCPATH   = berry/src platform
+diff --git a/platform/be_port.c b/platform/be_port.c
+index cd881dd..935f03e 100755
+--- a/platform/be_port.c
++++ b/platform/be_port.c
+@@ -18,10 +18,7 @@
+ /* standard input and output */
+ 
+ EM_JS(void, _js_writebuffer, (const char *text, size_t length), {
+-    // Note how we return the output of handleAsync() here.
+-    return Asyncify.handleAsync(async() => {
+-        await writeOutputText(UTF8ToString(text, length));
+-    });
++    return console.log(UTF8ToString(text, length));
+ })
+ 
+ BERRY_API void be_writebuffer(const char *buffer, size_t length)
