@@ -1,7 +1,7 @@
 {
     "name": "Berry: HTTP request from WASM",
     "image": "ubuntu:jammy",
-    "postCreateCommand": "apt install -y make",
+    "postCreateCommand": "bash .devcontainer/postCreate.sh",
     "features": {
         "ghcr.io/ebaskoro/devcontainer-features/emscripten:1": {},
         "ghcr.io/devcontainers/features/common-utils": {}

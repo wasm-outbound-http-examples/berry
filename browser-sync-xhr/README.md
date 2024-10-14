@@ -43,6 +43,7 @@ cd berry_web
    * Patch platform/be_port.c to get rid of Asyncify call
 
 ```sh
+dos2unix Makefile platform/be_port.c
 git apply ../no-asyncify.patch
 ```
 
